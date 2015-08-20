@@ -413,9 +413,13 @@ public class ClientProxy extends CommonProxy
 			{
 				if(!tileActive)
 				{
-					ClientUtils.mc().getSoundHandler().stopSound(sound);
-					sound = null;
-					soundMap.remove(soundName);
+					// hack to prevent glitched orphaned sounds by stopping a sound too early
+					if(sound.getTicksPlayed()>IESound.minPlayTicks)
+					{
+						ClientUtils.mc().getSoundHandler().stopSound(sound);
+						sound = null;
+						soundMap.remove(soundName);
+					}
 				}
 			}
 			else if(tileActive)
@@ -449,7 +453,6 @@ public class ClientProxy extends CommonProxy
 		if(sound!=null && sound.getXPosF()==tile.xCoord && sound.getYPosF()==tile.yCoord && sound.getZPosF()==tile.zCoord)
 		{
 			ClientUtils.mc().getSoundHandler().stopSound(sound);
-			sound = null;
 		}
 	}
 	@Override

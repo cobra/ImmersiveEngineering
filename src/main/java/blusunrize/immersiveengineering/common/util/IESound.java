@@ -20,6 +20,8 @@ public class IESound implements ITickableSound
 	public boolean canRepeat;
 	public int repeatDelay;
 	public float volumeAjustment=1;
+	public int ticksPlayed;
+	public static int minPlayTicks = 20;
 
 	public IESound(ResourceLocation sound, float volume, float pitch, boolean repeat, int repeatDelay, double x, double y, double z, AttenuationType attenuation)
 	{
@@ -33,6 +35,7 @@ public class IESound implements ITickableSound
 		this.canRepeat = repeat;
 		this.repeatDelay = repeatDelay;
 		origPos = new float[]{(float)x,(float)y,(float)z};
+		this.ticksPlayed = 0;
 	}
 
 	public float[] origPos;
@@ -119,6 +122,7 @@ public class IESound implements ITickableSound
 	@Override
 	public void update()
 	{
+		ticksPlayed++;
 		if(ClientUtils.mc().thePlayer.worldObj.getTotalWorldTime()%40==0)
 			evaluateVolume();
 	}
@@ -128,5 +132,10 @@ public class IESound implements ITickableSound
 	public boolean isDonePlaying()
 	{
 		return donePlaying;
+	}
+
+	public int getTicksPlayed()
+	{
+		return ticksPlayed;
 	}
 }
