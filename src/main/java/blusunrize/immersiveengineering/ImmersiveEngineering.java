@@ -88,8 +88,7 @@ public class ImmersiveEngineering
 		Lib.IC2 = Loader.isModLoaded("IC2") && Config.getBoolean("ic2compat");
 		Lib.GREG = Loader.isModLoaded("gregtech") && Config.getBoolean("gregtechcompat");
 		for(IECompatModule compat : IECompatModule.modules)
-			if(Loader.isModLoaded(compat.modId))
-				compat.init();
+			compat.init();
 	}
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event)
