@@ -2,7 +2,7 @@ package blusunrize.immersiveengineering.common.util.compat.hydcraft;
 
 import java.util.ArrayList;
 
-import k4unl.minecraft.Hydraulicraft.api.IHarvesterTrolley;
+import cpw.mods.fml.common.Optional;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -12,7 +12,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 import blusunrize.immersiveengineering.common.IEContent;
 import blusunrize.immersiveengineering.common.blocks.plant.BlockIECrop;
 
-public class IETrolley implements IHarvesterTrolley
+@Optional.Interface(iface = "k4unl.minecraft.Hydraulicraft.api.IHarvesterTrolley", modid="HydCraft")
+public class IETrolley implements k4unl.minecraft.Hydraulicraft.api.IHarvesterTrolley
 {
 	@Override
 	public boolean canHarvest(World world, int x, int y, int z)

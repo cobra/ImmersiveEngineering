@@ -7,24 +7,25 @@ import blusunrize.immersiveengineering.common.util.compat.hydcraft.HydCraftHelpe
 import blusunrize.immersiveengineering.common.util.compat.mfr.MFRHelper;
 import blusunrize.immersiveengineering.common.util.compat.minetweaker.MTHelper;
 import blusunrize.immersiveengineering.common.util.compat.waila.WailaHelper;
+import cpw.mods.fml.common.Loader;
 
 public abstract class IECompatModule
 {
 	public static Set<IECompatModule> modules = new HashSet<IECompatModule>();
 	static{
-		modules.add(new MFRHelper());
-		modules.add(new MTHelper());
-		modules.add(new DenseOresHelper());
-		modules.add(new EE3Helper());
-		modules.add(new FMPHelper());
-		modules.add(new ForestryHelper());
-		modules.add(new BacktoolsHelper());
-		modules.add(new WailaHelper());
-		modules.add(new GregTechHelper());
-		modules.add(new HydCraftHelper());
-		modules.add(new TEHelper());
+		if(Loader.isModLoaded("MineFactoryReloaded")) modules.add(new MFRHelper());
+		if(Loader.isModLoaded("MineTweaker3")) modules.add(new MTHelper());
+		if(Loader.isModLoaded("denseores")) modules.add(new DenseOresHelper());
+		if(Loader.isModLoaded("EE3")) modules.add(new EE3Helper());
+		if(Loader.isModLoaded("ForgeMicroblock")) modules.add(new FMPHelper());
+		if(Loader.isModLoaded("Forestry")) modules.add(new ForestryHelper());
+		if(Loader.isModLoaded("BackTools")) modules.add(new BacktoolsHelper());
+		if(Loader.isModLoaded("Waila")) modules.add(new WailaHelper());
+		if(Loader.isModLoaded("gregtech")) modules.add(new GregTechHelper());
+		if(Loader.isModLoaded("HydCraft")) modules.add(new HydCraftHelper());
+		if(Loader.isModLoaded("ThermalExpansion")) modules.add(new TEHelper());
 	}
-	
+
 	public String modId;
 	public IECompatModule(String modId)
 	{
