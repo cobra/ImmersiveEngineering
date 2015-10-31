@@ -75,6 +75,8 @@ public class TileEntityBottlingMachine extends TileEntityMultiblockPart implemen
 					{
 						this.energyStorage.extractEnergy(consumed, false);
 						process[i]++;
+						if(process[i]<88 && predictedOutput[i] != null && predictedOutput[i].getItem() instanceof IFluidContainerItem && getFilledItem(predictedOutput[i], false)!=null)
+							predictedOutput[i] = getFilledItem(predictedOutput[i], true);
 					}
 				}
 				else
@@ -89,12 +91,12 @@ public class TileEntityBottlingMachine extends TileEntityMultiblockPart implemen
 							update = true;
 						process[i]++;
 						if(filled!=null && process[i]>72)
-							inventory[i] = getFilledItem(inventory[i], true).copy();
+							predictedOutput[i] = getFilledItem(inventory[i], true).copy();
 					}
 				}
 				if(process[i]>120)
 				{
-					ItemStack output = inventory[i].copy();
+					ItemStack output = predictedOutput[i]!=null? predictedOutput[i].copy():inventory[i].copy();
 					TileEntity invOutput = worldObj.getTileEntity(xCoord+(facing==4?1:facing==5?-1:((mirrored?-1:1)*(facing==3?1:-1))), yCoord+1, zCoord+(facing==2?1:facing==3?-1:((mirrored?-1:1)*(facing==4?1:-1))));
 					if((invOutput instanceof ISidedInventory && ((ISidedInventory)invOutput).getAccessibleSlotsFromSide(facing).length>0)
 							||(invOutput instanceof IInventory && ((IInventory)invOutput).getSizeInventory()>0))

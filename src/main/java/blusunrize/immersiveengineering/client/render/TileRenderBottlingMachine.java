@@ -70,10 +70,10 @@ public class TileRenderBottlingMachine extends TileRenderIE
 		double tapShift = 0;
 
 		for(int i=0; i<bottler.inventory.length; i++)
-			if(bottler.inventory[i]!=null)
+			if(bottler.inventory[i]!=null && bottler.process[i]!=-1)
 			{
 				float step = bottler.process[i]/120f;
-				double fill = step>=.4+d0+d1*2?1:0;
+				double fill = step>=.4+d0+d1*1.5?1:0;
 				if(bottler.predictedOutput[i]!=null)
 					if(step>=.4+d0 && step<.4+d0+d1)
 						fill = tapShift = (step-.4-d0)/d1;
@@ -113,14 +113,14 @@ public class TileRenderBottlingMachine extends TileRenderIE
 	{
 		if(empty==null)
 			return;
-		if(full!=null && MinecraftForgeClient.getItemRenderer(empty, ItemRenderType.ENTITY)==null && MinecraftForgeClient.getItemRenderer(full, ItemRenderType.ENTITY)==null && empty.getItemSpriteNumber()==1 && full.getItemSpriteNumber()==1)
+		if(MinecraftForgeClient.getItemRenderer(empty, ItemRenderType.ENTITY)==null && (full==null || MinecraftForgeClient.getItemRenderer(full, ItemRenderType.ENTITY)==null) && empty.getItemSpriteNumber()==1 && (full==null || full.getItemSpriteNumber()==1))
 		{
 			GL11.glPushMatrix();
 			ClientUtils.bindAtlas(1);
 			GL11.glTranslated(.0,-.0525,.0625/6);
 			GL11.glScalef(.51f, .51f, .51f);
 
-			if(fill>0)
+			if(fill>0 && full!=null)
 				for(int pass=0; pass<full.getItem().getRenderPasses(full.getItemDamage()); pass++)
 				{
 					IIcon iconFull = full.getItem().getIcon(full, pass);
@@ -131,11 +131,11 @@ public class TileRenderBottlingMachine extends TileRenderIE
 					ClientUtils.renderItemIn2D(iconFull, new double[]{0,1,1-pxFill,1}, iconFull.getIconWidth(),h, .0625f);
 					GL11.glColor3f(1,1,1);
 				}
-			if(fill<1)
+			if(fill<1 || full==null)
 				for(int pass=0; pass<empty.getItem().getRenderPasses(empty.getItemDamage()); pass++)
 				{
 					IIcon iconEmpty = empty.getItem().getIcon(empty, pass);
-					int h = Math.round((1-fill)*iconEmpty.getIconHeight());
+					int h = full!=null?Math.round((1-fill)*iconEmpty.getIconHeight()):iconEmpty.getIconHeight();
 					double pxFill = h/(double)iconEmpty.getIconHeight();
 					GL11.glTranslated(0,1-pxFill,0);
 					int col = empty.getItem().getColorFromItemStack(empty, pass);
