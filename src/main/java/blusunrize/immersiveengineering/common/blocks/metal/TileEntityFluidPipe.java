@@ -236,7 +236,7 @@ public class TileEntityFluidPipe extends TileEntityIEBase implements IFluidHandl
 		{
 			TileEntity con = worldObj.getTileEntity(xCoord+(i==4?-1: i==5?1: 0),yCoord+(i==0?-1: i==1?1: 0),zCoord+(i==2?-1: i==3?1: 0));
 			connections <<= 1;
-			if(sideConfig[i]==0 && con instanceof IFluidHandler)
+			if(sideConfig[i]==0 && con instanceof IFluidHandler && (((IFluidHandler) con).canFill(ForgeDirection.getOrientation(i).getOpposite(), null) || ((IFluidHandler) con).canDrain(ForgeDirection.getOrientation(i).getOpposite(), null)))
 				connections |= 1;
 		}
 		return connections;

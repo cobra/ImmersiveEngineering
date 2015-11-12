@@ -322,14 +322,14 @@ public class TileEntityRefinery extends TileEntityMultiblockPart implements IFlu
 	{
 		if(!formed)
 			return false;
-		return true;
+		return pos==15||pos==19;
 	}
 	@Override
 	public boolean canDrain(ForgeDirection from, Fluid fluid)
 	{
 		if(!formed)
 			return false;
-		return true;
+		return pos==2||pos==32;
 	}
 	@Override
 	public FluidTankInfo[] getTankInfo(ForgeDirection from)
